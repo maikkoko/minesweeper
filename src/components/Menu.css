@@ -1,0 +1,23 @@
+.menu {
+  margin: 10px auto;
+  width: 200px;
+}
+
+.menu-header {
+  width: 100%;
+  padding: 4px;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+}

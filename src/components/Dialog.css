@@ -1,0 +1,35 @@
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dialog-content {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 400px;
+  height: 180px;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.dialog-content-text {
+  margin-top: 50px;
+}
+
+.dialog-button {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dialog--hidden {
+  display: none;
+}

@@ -1,0 +1,8 @@
+.board {
+  margin: 0 auto;
+}
+
+.board-row {
+  display: flex;
+  justify-content: center;
+}
