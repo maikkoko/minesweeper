@@ -4,16 +4,14 @@ import './Game.css'
 import Board from './components/Board'
 import Menu from './components/Menu'
 import Dialog from './components/Dialog'
+import GameMaster from './components/GameMaster'
 
 import * as Mine from './lib/mine'
 
 const initialState = {
+  board: null,
+  boardDetails: null,
   map: null,
-  mines: 0,
-  flaggedCells: 0,
-  revealedCells: 0,
-  gameHeight: null,
-  gameWidth: null,
   isGameOver: false,
   isWinner: false,
   difficulty: null,
@@ -65,8 +63,13 @@ class App extends Component {
             onUpdate={this._onGameUpdate}
             map={this.state.map} />
 
-          <p>bombs left: {this.state.mines - this.state.flaggedCells}</p>
-
+            <GameMaster
+              boardDetails={this.state.boardDetails}
+              map={this.state.map}
+              board={this.state.board}
+              onGameWin={this._onGameWin}
+              onGameOver={this._onGameOver} />
+  
           <div
             onClick={this.resetGame}
             className='game-button'>
@@ -86,63 +89,27 @@ class App extends Component {
     let boardDetails = mine.getBoardDetails()
 
     this.setState({
-      map: mine.getMineField(),
-      mines: boardDetails.mines,
-      gameHeight: boardDetails.height,
-      gameWidth: boardDetails.width
+      map           : mine.getMineField(),
+      boardDetails  : boardDetails
     })
   }
 
-  _onGameUpdate = (context, operation) => {
-    if (context === 'reveal') {
-      let newRevealedCells = this.state.revealedCells + 1
-      if (!this.checkGameState(newRevealedCells)) {
-        this.setState({
-          revealedCells: newRevealedCells
-        })
-      } else {
-        this.setState({
-          isWinner: true,
-          showDialog: true
-        })
-      }
-    } else if (context === 'flag') {
-      let newFlaggedValue = this.state.flaggedCells
-
-      if (operation === 'add') {
-        newFlaggedValue++
-      } else if (operation === 'subtract') {
-        newFlaggedValue--
-      }
-
-      this.setState({
-        flaggedCells: newFlaggedValue
-      })
-    } else {
-      this.setState({
-        isGameOver: true,
-        showDialog: true
-      })
-    }
+  _onGameWin = () => {
+    this.setState({
+      isWinner: true,
+      showDialog: true
+    })
   }
 
-  checkGameState = (newRevealedCells = null) => {
-    let {
-      revealedCells,
-      gameHeight,
-      gameWidth,
-      mines
-    } = this.state
+  _onGameOver = () => {
+    this.setState({
+      isGameOver: true,
+      showDialog: true
+    })
+  }
 
-    if (newRevealedCells) {
-      revealedCells = newRevealedCells
-    }
-
-    let totalCells = gameHeight * gameWidth
-
-    let tilesRemaining = totalCells - revealedCells - mines 
-
-    return tilesRemaining === 0
+  _onGameUpdate = (updatedBoard) => {
+    this.setState({ board: updatedBoard })
   }
 }
 

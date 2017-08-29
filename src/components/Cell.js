@@ -14,6 +14,8 @@ export default class Cell extends Component {
 
   render () {
     let { uiState } = this.props
+    let value = this.props.value !== '0'
+      ? this.props.value : ' '
 
     if (uiState.isRevealed) {
       return (
@@ -22,7 +24,7 @@ export default class Cell extends Component {
           className='cell'>
           <div className='cell-value'>
             <p>
-              { this.props.value }
+              { value }
             </p>
           </div>
         </div>
