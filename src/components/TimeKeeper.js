@@ -5,7 +5,8 @@ import moment from 'moment'
 export default class TimeKeeper extends Component {
 
   static propTypes = {
-    hasStarted : PropTypes.bool
+    hasStarted : PropTypes.bool,
+    reportTime : PropTypes.func.isRequired
   }
 
   state = {
@@ -21,6 +22,7 @@ export default class TimeKeeper extends Component {
     }
 
     if (!this.props.hasStopped && nextProps.hasStopped) {
+      this.props.reportTime(this.state.time)
       clearInterval(this.interval)
     }
   }  

@@ -20,7 +20,11 @@
 }
 
 .dialog-content-text {
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+.dialog-content-time {
+  margin-top: 8px;
 }
 
 .dialog-button {

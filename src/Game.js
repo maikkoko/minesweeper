@@ -17,7 +17,8 @@ const initialState = {
   isWinner: false,
   difficulty: null,
   showDialog: false,
-  hasStarted: false
+  hasStarted: false,
+  time: null
 }
 
 class App extends Component {
@@ -30,16 +31,25 @@ class App extends Component {
 
   render() {
     let gameScreen = this.getGameScreen()
-    let dialogText = ''
+    let context
 
     if (this.state.map !== null) {
       if (this.state.isGameOver) {
-        dialogText = 'You stepped on a bomb! Game Over!'
+        context = 'GAMEOVER'
       }
       if (this.state.isWinner) {
-        dialogText = 'Congratulations! You Win!'
+        context = 'WIN'
       }
     }
+
+    let dialog = this.state.showDialog
+      ? (
+        <Dialog
+          context={context}
+          onClick={this.resetGame}
+          time={this.state.time}
+          isVisible={this.state.showDialog} />
+      ) : null
 
     return (
       <div className='game'>
@@ -48,10 +58,7 @@ class App extends Component {
 
         { gameScreen }
 
-        <Dialog
-          text={dialogText}
-          onClick={this.resetGame}
-          isVisible={this.state.showDialog} />
+        { dialog }
 
       </div>
     )
@@ -67,6 +74,7 @@ class App extends Component {
             map={this.state.map} />
 
             <TimeKeeper
+              reportTime={this._recordTime}
               hasStarted={this.state.hasStarted}
               hasStopped={this.state.isGameOver || this.state.isWinner } />
 
@@ -121,6 +129,10 @@ class App extends Component {
     if (!this.state.hasStarted && this.state.board !== null) {
       this.setState({ hasStarted: true })
     }
+  }
+
+  _recordTime = (time) => {
+    this.setState({ time: time })
   }
 }
 
