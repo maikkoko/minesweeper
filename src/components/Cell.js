@@ -38,9 +38,7 @@ export default class Cell extends Component {
           onContextMenu={this._preventDefault}
           className='cell'>
           <div className='cell-value'>
-            <p>
-              { display }
-            </p>
+            { display }
           </div>
         </div>
       )

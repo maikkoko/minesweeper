@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "gh-pages": "^1.0.0",
+    "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-addons-update": "^15.6.0",
     "react-dom": "^15.6.1",
@@ -17,5 +18,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage" : "http://maikkoko.github.io/minesweeper"
+  "homepage": "http://maikkoko.github.io/minesweeper"
 }

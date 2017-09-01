@@ -5,6 +5,7 @@ import Board from './components/Board'
 import Menu from './components/Menu'
 import Dialog from './components/Dialog'
 import GameMaster from './components/GameMaster'
+import TimeKeeper from './components/TimeKeeper'
 
 import * as Mine from './lib/mine'
 
@@ -15,7 +16,8 @@ const initialState = {
   isGameOver: false,
   isWinner: false,
   difficulty: null,
-  showDialog: false
+  showDialog: false,
+  hasStarted: false
 }
 
 class App extends Component {
@@ -62,6 +64,10 @@ class App extends Component {
           <Board
             onUpdate={this._onGameUpdate}
             map={this.state.map} />
+
+            <TimeKeeper
+              hasStarted={this.state.hasStarted}
+              hasStopped={this.state.isGameOver || this.state.isWinner } />
 
             <GameMaster
               boardDetails={this.state.boardDetails}
@@ -110,6 +116,10 @@ class App extends Component {
 
   _onGameUpdate = (updatedBoard) => {
     this.setState({ board: updatedBoard })
+
+    if (!this.state.hasStarted && this.state.board !== null) {
+      this.setState({ hasStarted: true })
+    }
   }
 }
 
