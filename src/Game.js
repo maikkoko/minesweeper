@@ -62,6 +62,7 @@ class App extends Component {
       (
         <div>
           <Board
+            isGameOver={this.state.isGameOver}
             onUpdate={this._onGameUpdate}
             map={this.state.map} />
 

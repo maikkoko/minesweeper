@@ -10,11 +10,18 @@ export default class Board extends Component {
 
   static propTypes = {
     map           : PropTypes.arrayOf(PropTypes.array).isRequired,
-    onUpdate      : PropTypes.func.isRequired
+    onUpdate      : PropTypes.func.isRequired,
+    isGameOver    : PropTypes.bool
   }
 
   state = {
     board: null // UI state of board (open or close)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!this.props.isGameOver && nextProps.isGameOver) {
+      this.revealAllMines()
+    }
   }
 
   componentDidMount () {
@@ -28,7 +35,7 @@ export default class Board extends Component {
       let gameBoard = this.drawBoard()
 
       return (
-        <div className="board">
+        <div className='board'>
           { gameBoard }
         </div>
       )
@@ -233,5 +240,22 @@ export default class Board extends Component {
 
     // Update Game State
     this.props.onUpdate(updatedBoard)
+  }
+
+  revealAllMines = () => {
+    let { board } = this.state
+    let { map } = this.props
+
+    let updatedBoard = board.slice()
+
+    for (let row = 0; row < updatedBoard.length; row++) {
+      for (let col = 0; col < updatedBoard[0].length; col++) {
+        if (map[row][col] === '*') {
+          updatedBoard = update(updatedBoard, { [row]: { [col]: { isRevealed: { $set: true } } } })
+        }
+      }
+    }
+
+    this.setState({ board: updatedBoard })
   }
 }

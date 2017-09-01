@@ -25,10 +25,6 @@ export default class TimeKeeper extends Component {
     }
   }  
 
-  componentDidMount () {
-
-  }
-
   componentWillUnmount () {
     clearInterval(this.interval)
   }
