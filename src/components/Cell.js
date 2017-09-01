@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import BombImage from './BombImage'
 import './Cell.css'
 
 export default class Cell extends Component {
@@ -13,9 +14,23 @@ export default class Cell extends Component {
   }
 
   render () {
-    let { uiState } = this.props
-    let value = this.props.value !== '0'
-      ? this.props.value : ' '
+    let { uiState, value } = this.props
+
+    let display
+    switch (value) {
+      case '0':
+        display = <p>&nbsp;</p>
+        break
+      case '*':
+        display =
+          <BombImage
+            fill='#000'
+            width={18} />
+        break
+      default:
+        display = <p>{value}</p>
+        break
+    }
 
     if (uiState.isRevealed) {
       return (
@@ -24,7 +39,7 @@ export default class Cell extends Component {
           className='cell'>
           <div className='cell-value'>
             <p>
-              { value }
+              { display }
             </p>
           </div>
         </div>
